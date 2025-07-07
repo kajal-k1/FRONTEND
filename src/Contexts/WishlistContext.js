@@ -1,129 +1,157 @@
-// import React, { createContext, useState, useContext, useEffect } from 'react';
 
-// const WishlistContext = createContext();
 
-// export const WishlistProvider = ({ children }) => {
-//   const [wishlistItems, setWishlistItems] = useState(() => {
-//     const savedWishlist = localStorage.getItem('wishlist');
-//     return savedWishlist ? JSON.parse(savedWishlist) : [];
-//   });
-
-//   useEffect(() => {
-//     localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
-//   }, [wishlistItems]);
-
-//   const addToWishlist = (item) => {
-//     const wishlistItem = {
-//       id: item.id,
-//       title: item.title,
-//       price: item.price,
-//       brand: item.brand,
-//       selectedSize: item.selectedSize || 'Free Size',
-//       image:
-//         item.images && item.images.length > 0
-//           ? typeof item.images[0] === 'string'
-//             ? item.images[0]
-//             : item.images[0].url
-//           : item.image || '/images/placeholder.jpg',
-//     };
-
-//     const exists = wishlistItems.some(
-//       (product) =>
-//         product.id === wishlistItem.id &&
-//         product.selectedSize === wishlistItem.selectedSize
-//     );
-
-//     if (!exists) {
-//       setWishlistItems((prev) => [...prev, wishlistItem]);
-//     }
-//   };
-
-//   const removeFromWishlist = (itemId, selectedSize) => {
-//     setWishlistItems((prev) =>
-//       prev.filter(
-//         (item) =>
-//           !(item.id === itemId && item.selectedSize === selectedSize)
-//       )
-//     );
-//   };
-
-//   return (
-//     <WishlistContext.Provider
-//       value={{ wishlistItems, addToWishlist, removeFromWishlist }}
-//     >
-//       {children}
-//     </WishlistContext.Provider>
-//   );
-// };
-
-// export const useWishlist = () => useContext(WishlistContext);
-
-// src/Contexts/WishlistContext.js
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 
 const WishlistContext = createContext();
 
 export const WishlistProvider = ({ children }) => {
-  const [wishlistItems, setWishlistItems] = useState(() => {
-    const saved = localStorage.getItem('wishlist');
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [wishlistItems, setWishlistItems] = useState([]);
+
 
   useEffect(() => {
-    localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
-  }, [wishlistItems]);
+    const fetchWishlist = async () => {
+      const token = localStorage.getItem('token'); 
+      if (!token) return;
 
-  const addToWishlist = (item) => {
-    const wishlistItem = {
-      id: item.id,
-      title: item.title,
-      price: item.price,
-      brand: item.brand,
-      selectedSize: item.selectedSize || 'Free Size',
-      image:
-        item.images?.[0]?.url ||
-        (typeof item.images?.[0] === 'string' ? item.images[0] : null) ||
-        item.image ||
-        '/images/placeholder.jpg',
+      try {
+        const res = await fetch('http://localhost:5000/api/wishlist', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await res.json();
+
+        if (Array.isArray(data.products)) {
+          const normalized = data.products.map((item) => {
+            const product = item.productId;
+            const imageUrl =
+              product.images?.[0]?.url ||
+              (typeof product.images?.[0] === 'string'
+                ? product.images[0]
+                : null) ||
+              '/images/placeholder.jpg';
+
+            return {
+              ...product,
+              id: product._id,
+              selectedSize: item.size,
+              images: product.images || [],
+              image: imageUrl,
+            };
+          });
+
+          setWishlistItems(normalized);
+        }
+      } catch (error) {
+        console.error(' Fetch wishlist error:', error);
+      }
     };
 
-    const exists = wishlistItems.some(
-      (product) =>
-        product.id === wishlistItem.id &&
-        product.selectedSize === wishlistItem.selectedSize
-    );
+    fetchWishlist(); 
+  }, []);
 
-    if (!exists) {
-      setWishlistItems((prev) => [...prev, wishlistItem]);
+  
+  const addToWishlist = async (item) => {
+    const token = localStorage.getItem('token'); 
+    const itemId = item._id || item.id;
+    const size = item.selectedSize;
+
+    if (!itemId || itemId.length !== 24 || !size) {
+      console.warn(' Invalid productId or size for addToWishlist:', { itemId, size });
+      alert('Please select a size before adding to wishlist.');
+      return;
+    }
+
+    const exists = wishlistItems.some(
+      (p) => p.id === itemId && p.selectedSize === size
+    );
+    if (exists) return;
+
+    try {
+      const res = await fetch('http://localhost:5000/api/wishlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ productId: itemId, size }),
+      });
+
+      if (!res.ok) {
+        console.error('Add wishlist failed:', await res.text());
+        return;
+      }
+
+      await res.json();
+
+      const imageUrl =
+        item.images?.[0]?.url ||
+        (typeof item.images?.[0] === 'string'
+          ? item.images[0]
+          : null) ||
+        item.image ||
+        '/images/placeholder.jpg';
+
+      setWishlistItems((prev) => [
+        ...prev,
+        {
+          ...item,
+          id: itemId,
+          selectedSize: size,
+          images: item.images || [imageUrl],
+          image: imageUrl,
+        },
+      ]);
+    } catch (err) {
+      console.error(' Wishlist add error:', err);
     }
   };
 
-  const removeFromWishlist = (itemId, selectedSize) => {
-    setWishlistItems((prev) =>
-      prev.filter(
-        (item) => !(item.id === itemId && item.selectedSize === selectedSize)
-      )
-    );
-  };
+  
+  const removeFromWishlist = async (itemId, selectedSize) => {
+    const token = localStorage.getItem('token'); 
 
-  const clearWishlist = () => {
-    setWishlistItems([]);
+    try {
+      if (!itemId || itemId.length !== 24 || !selectedSize) {
+        console.warn('Invalid itemId or selectedSize');
+        return;
+      }
+
+      const res = await fetch(
+        `http://localhost:5000/api/wishlist/${itemId}?size=${encodeURIComponent(
+          selectedSize
+        )}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!res.ok) {
+        console.error('Remove wishlist failed:', await res.text());
+        return;
+      }
+
+      setWishlistItems((prev) =>
+        prev.filter(
+          (item) => !(item.id === itemId && item.selectedSize === selectedSize)
+        )
+      );
+    } catch (error) {
+      console.error(' Remove wishlist error:', error);
+    }
   };
 
   return (
     <WishlistContext.Provider
-      value={{
-        wishlistItems,
-        addToWishlist,
-        removeFromWishlist,
-        clearWishlist,
-        wishlistCount: wishlistItems.length, // ✅ Added wishlistCount
-      }}
+      value={{ wishlistItems, addToWishlist, removeFromWishlist }}
     >
       {children}
     </WishlistContext.Provider>
   );
 };
 
-// Custom hook for accessing wishlist context
 export const useWishlist = () => useContext(WishlistContext);

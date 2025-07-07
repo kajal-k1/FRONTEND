@@ -31,7 +31,7 @@
   box-sizing: border-box;
 }
 
-.checkout-form input[type="text"].full, /* for street field spanning full width */
+.checkout-form input[type="text"].full, 
 .checkout-form input[type="email"].full {
   flex: 1 1 100%;
 }

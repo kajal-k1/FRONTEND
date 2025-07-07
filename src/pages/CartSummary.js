@@ -5,7 +5,7 @@ import { ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../Contexts/CartContext';
 import { useWishlist } from '../Contexts/WishlistContext';
-import './CartSummary.css'; // Optional styling
+import './CartSummary.css'; 
 
 const CartSummary = () => {
   const navigate = useNavigate();

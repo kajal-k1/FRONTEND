@@ -1,11 +1,8 @@
 
-
-
 .app-header {
     width: 100%;
     font-family: Arial, sans-serif; 
   }
-  
   
   .top-bar {
     background-color: #000000;
@@ -76,17 +73,17 @@
   .nav-main-content {
       display: flex;
       align-items: center;
-      flex-grow: 1; /* Allows this container to take available space */
-      justify-content: space-between; /* Pushes links/search left, icons right */
+      flex-grow: 1; 
+      justify-content: space-between; 
     
-      gap: 20px; /* Controls minimum space between links, search, icons */
+      gap: 20px; 
   }
   
-  /* Nav Links (Categories/Brands) */
+  
   .nav-links {
       display: flex;
       align-items: center;
-      flex-shrink: 0; /* Prevent links section from shrinking */
+      flex-shrink: 0; 
   }
   
   .nav-link-button {
@@ -96,29 +93,28 @@
       font-size: 15px;
       font-weight: bold;
       cursor: pointer;
-      margin: 0 10px; /* Space between "Categories" and "Brands" */
+      margin: 0 10px; 
       display: flex;
       align-items: center;
-      white-space: nowrap; /* Prevent text wrapping */
+      white-space: nowrap; 
   }
   .nav-link-button svg {
       margin-left: 5px;
   }
   
   
-  /* Search Bar Styling (UPDATED) */
+  
   .search-bar {
     display: flex;
     align-items: center;
     background-color: #424242;
     border-radius: 4px;
     padding: 8px 12px;
-    flex-grow: 1; /* Allows search to expand and fill space */
-    /* Adjust max/min width as needed */
+    flex-grow: 1; 
     max-width: 700px;
     min-width: 250px;
    
-    margin: 0 20px; /* Add some margin to space it from links/icons */
+    margin: 0 20px; 
   }
   
   .search-icon {
@@ -139,11 +135,11 @@
     color: #bdbdbd;
   }
   
-  /* Right Section: Action Icons (UPDATED) */
+ 
   .nav-right {
     display: flex;
     align-items: center;
-    flex-shrink: 0; /* Prevent icons section from shrinking */
+    flex-shrink: 0; 
   }
   
   .icon-button {
@@ -151,7 +147,7 @@
     border: none;
     color: #ffffff;
     cursor: pointer;
-    margin-left: 20px; /* Space between icons */
+    margin-left: 20px; 
     padding: 5px;
     display: flex;
     align-items: center;

@@ -33,7 +33,7 @@
 
 
    width: 100%;
-  max-width: 240px; /* Optional: Adjust the width of each card */
+  max-width: 240px; 
   margin: 0 auto;
 }
 
@@ -170,7 +170,7 @@
 }
 .wishlist-btn svg,
 .compare-btn svg {
-  color:black; /* Pink color */
+  color:black; 
   width: 20px;
   height: 20px;
 }
@@ -208,7 +208,7 @@ limited-stock {
   overflow: hidden;
 }
 
-/* Hide nav buttons by default */
+
 .nav-btn {
   position: absolute;
   top: 50%;
@@ -236,7 +236,7 @@ limited-stock {
   right: 10px;
 }
 
-/* Show buttons on hover */
+
 .product-image-container:hover .show-on-hover {
   display: flex;
 }
@@ -257,7 +257,7 @@ limited-stock {
   background-color: #0056b3;
 }
 
-/* Overlay */
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -273,7 +273,7 @@ limited-stock {
   padding: 20px;
 }
 
-/* Modal Content */
+
 .modal-gallery {
   background: white;
   padding: 24px;
@@ -294,7 +294,7 @@ limited-stock {
   color: #333;
 }
 
-/* Image Grid */
+
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -313,7 +313,7 @@ limited-stock {
   border-radius: 8px;
 }
 
-/* Overlays */
+
 .discount-tag {
   position: absolute;
   top: 10px;

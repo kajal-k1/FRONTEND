@@ -1,144 +1,175 @@
 
 
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
+const CartContext = createContext();
 
+export const CartProvider = ({ children }) => {
+  const [cartItems, setCartItems] = useState([]);
 
- import React, { createContext, useState, useContext, useEffect } from 'react';
+  
+  useEffect(() => {
+    const fetchCart = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) return;
 
- const CartContext = createContext();
+      try {
+        const res = await fetch('http://localhost:5000/api/cart', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await res.json();
+        setCartItems(data.items || []);
+      } catch (error) {
+        console.error(' Error fetching cart:', error);
+      }
+    };
 
- export const CartProvider = ({ children }) => {
-   const [cartItems, setCartItems] = useState(() => {
-     const savedCart = localStorage.getItem('cart');
-     return savedCart ? JSON.parse(savedCart) : [];
-   });
+    fetchCart();
+  }, []); 
+  
+  const addToCart = async (item) => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
 
-   useEffect(() => {
-     localStorage.setItem('cart', JSON.stringify(cartItems));
-   }, [cartItems]);
+    const payload = {
+      productId: item.id || item._id || item.productId,
+      selectedSize: item.selectedSize || 'Free Size',
+      quantity: item.quantity || 1,
+      price: item.price,
+      originalPrice: item.originalPrice || item.price,
+      discount: item.discount || 0,
+      image: item.image,
+      title: item.title,
+      brand: item.brand,
+    };
 
-   const addToCart = (item) => {
-     const original = item.originalPrice || item.price;
-     const price = item.price;
+    try {
+      const res = await fetch('http://localhost:5000/api/cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      setCartItems(data.items);
+    } catch (error) {
+      console.error(' Error adding to cart:', error);
+    }
+  };
 
-     let flatDiscount = 0;
-     if (item.originalPrice && item.originalPrice > item.price) {
-       flatDiscount = item.originalPrice - item.price;
-     } else if (
-       item.discount &&
-       !isNaN(item.discount) &&
-       item.originalPrice &&
-       item.discount > 0
-     ) {
-       flatDiscount = Math.round((item.discount / 100) * item.originalPrice);
-     }
+  const removeFromCart = async (productId, selectedSize) => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
 
-     const cartItem = {
-       id: item.id,
-       title: item.title,
-       brand: item.brand,
-       price: price,
-       originalPrice: original,
-       discount: flatDiscount, // Flat ₹ discount per item
-       image:
-         item.images && item.images.length > 0
-           ? typeof item.images[0] === 'string'
-             ? item.images[0]
-             : item.images[0].url
-           : item.image || '/images/placeholder.jpg',
-       quantity: 1,
-       selectedSize: item.selectedSize || 'Free Size',
-     };
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/cart/${productId}?size=${selectedSize}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await res.json();
+      setCartItems(data.items);
+    } catch (error) {
+      console.error(' Error removing from cart:', error);
+    }
+  };
 
-     setCartItems((prevItems) => {
-       const existingItem = prevItems.find(
-         (i) => i.id === cartItem.id && i.selectedSize === cartItem.selectedSize
-       );
+  const updateCartItemSize = async (productId, oldSize, newSize) => {
+    try {
+      const existingItem = cartItems.find(
+        (item) => item.productId === productId && item.selectedSize === oldSize
+      );
+      if (!existingItem) return;
 
-       if (existingItem) {
-         return prevItems.map((i) =>
-           i.id === cartItem.id && i.selectedSize === cartItem.selectedSize
-             ? { ...i, quantity: i.quantity + 1 }
-             : i
-         );
-       } else {
-         return [...prevItems, cartItem];
-       }
-     });
-   };
+      const newItem = {
+        ...existingItem,
+        selectedSize: newSize,
+      };
 
-   const removeFromCart = (itemId, selectedSize) => {
-     setCartItems((prevItems) =>
-       prevItems.filter(
-         (item) => !(item.id === itemId && item.selectedSize === selectedSize)
-       )
-     );
-   };
+      await removeFromCart(productId, oldSize);
+      await addToCart(newItem);
+    } catch (error) {
+      console.error(' Error updating item size:', error);
+    }
+  };
 
-   const updateCartItemSize = (itemId, oldSize, newSize) => {
-     setCartItems((prevItems) => {
-       const itemToUpdate = prevItems.find(
-         (item) => item.id === itemId && item.selectedSize === oldSize
-       );
-       if (!itemToUpdate) return prevItems;
+  const updateCartItemQuantity = async (productId, selectedSize, newQuantity) => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
 
-       const existingItemWithNewSize = prevItems.find(
-         (item) => item.id === itemId && item.selectedSize === newSize
-       );
+    if (newQuantity <= 0) {
+      await removeFromCart(productId, selectedSize);
+      return;
+    }
 
-      if (existingItemWithNewSize) {
-         // Merge quantities if new size item exists
-         return prevItems
-           .filter((item) => !(item.id === itemId && item.selectedSize === oldSize))
-           .map((item) =>
-             item.id === itemId && item.selectedSize === newSize
-               ? { ...item, quantity: item.quantity + itemToUpdate.quantity }
-               : item
-           );
-       } else {
-         return prevItems.map((item) =>
-           item.id === itemId && item.selectedSize === oldSize
-             ? { ...item, selectedSize: newSize }
-             : item
-         );
-       }
-     });
-   };
+    try {
+      const existingItem = cartItems.find(
+        (item) => item.productId === productId && item.selectedSize === selectedSize
+      );
+      if (!existingItem) return;
 
-   const updateCartItemQuantity = (itemId, selectedSize, newQuantity) => {
-     setCartItems((prevItems) => {
-       if (newQuantity <= 0) {
-         return prevItems.filter(
-           (item) => !(item.id === itemId && item.selectedSize === selectedSize)
-         );
-       }
-       return prevItems.map((item) =>
-         item.id === itemId && item.selectedSize === selectedSize
-           ? { ...item, quantity: newQuantity }
-           : item
-       );
-     });
-   };
+      const payload = {
+        ...existingItem,
+        quantity: newQuantity,
+      };
 
-   const clearCart = () => {
-     setCartItems([]);
-   };
+      const res = await fetch('http://localhost:5000/api/cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
 
-   return (
-     <CartContext.Provider
-       value={{
-         cartItems,
-         addToCart,
-         removeFromCart,
-         clearCart,
-         updateCartItemSize,
-         updateCartItemQuantity,
-       }}
-     >
-       {children}     </CartContext.Provider>
-   );
- };
+      const data = await res.json();
+      setCartItems(data.items);
+    } catch (error) {
+      console.error(' Error updating quantity:', error);
+    }
+  };
 
- export const useCart = () => useContext(CartContext);
+  const clearCart = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
 
- export default CartContext;
+    try {
+      await fetch('http://localhost:5000/api/cart', {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setCartItems([]);
+    } catch (error) {
+      console.error('Error clearing cart:', error);
+    }
+  };
+
+  return (
+    <CartContext.Provider
+      value={{
+        cartItems,
+        setCartItems,
+        addToCart,
+        removeFromCart,
+        updateCartItemSize,
+        updateCartItemQuantity,
+        clearCart,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
+};
+
+export const useCart = () => useContext(CartContext);
+export default CartContext;

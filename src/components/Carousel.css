@@ -18,8 +18,7 @@
   .tatacliq-swiper-a {
     width: 100%;
   }
-  
-  /* Individual slide container */
+
   .slide-container-a {
     position: relative;
     width: 100%;
@@ -72,7 +71,7 @@
     background: #fff;
   }
   
-  /* ---------------- Responsive Design ---------------- */
+ 
   @media (max-width: 1024px) {
     .carousel-image-a {
       height: 400px;

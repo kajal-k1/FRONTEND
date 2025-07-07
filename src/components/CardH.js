@@ -1,19 +1,4 @@
 
-
-
-
-  //{ id: 1, image: 'https://assets.tatacliq.com/medias/sys_master/images/63588845387806.png' },
-  //{ id: 2, image: 'https://assets.tatacliq.com/medias/sys_master/images/63588845453342.png' },
- // { id: 3, image: 'https://assets.tatacliq.com/medias/sys_master/images/63588845518878.png' },
- // { id: 4, image: 'https://assets.tatacliq.com/medias/sys_master/images/63588845584414.png' },
- // { id: 5, image: 'https://assets.tatacliq.com/medias/sys_master/images/63588845649950.png' },
-  //{ id: 6, image: 'https://assets.tatacliq.com/medias/sys_master/images/63588845715486.png' },
-  //{ id: 7, image: 'https://assets.tatacliq.com/medias/sys_master/images/63588845387806.png' },
-
-
-
-
-
   import React, { useState } from 'react';
  import { Link } from 'react-router-dom';
   import { ChevronLeft, ChevronRight } from 'lucide-react';

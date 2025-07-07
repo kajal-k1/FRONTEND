@@ -16,7 +16,7 @@ const TopBar = () => {
     console.log("AuthContext user:", user);
   }, [user]);
 
-  // ✅ Handle outside click on desktop & mobile
+  
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (!e.target.closest('.login-register-wrapper')) {
@@ -31,13 +31,13 @@ const TopBar = () => {
     };
   }, []);
 
-  // ✅ Handle login button click
+  
   const handleLoginClick = () => {
     navigate('/login');
     setShowMenu(false);
   };
 
-  // ✅ Handle navigation inside dropdown
+  
   const handleNavigation = (path) => {
     navigate(path);
     setShowMenu(false);

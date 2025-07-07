@@ -23,7 +23,7 @@ const SearchResultsPage = () => {
   });
   const [sortOption, setSortOption] = useState('');
 
-  // Reset filters when searchTerm changes
+  
   useEffect(() => {
     setSelectedFilters({
       brand: [],
@@ -53,7 +53,7 @@ const SearchResultsPage = () => {
   useEffect(() => {
     let products = [...allProducts];
 
-    // Filter logic
+   
     Object.entries(selectedFilters).forEach(([key, values]) => {
       if (key === 'price' && values.length > 0) {
         products = products.filter(product =>
@@ -67,7 +67,7 @@ const SearchResultsPage = () => {
       }
     });
 
-    // Sort logic
+ 
     if (sortOption === 'lowToHigh') {
       products.sort((a, b) => a.price - b.price);
     } else if (sortOption === 'highToLow') {

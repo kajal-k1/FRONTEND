@@ -1,5 +1,5 @@
 
-/* === Original Styles (unchanged) === */
+
 .product-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -159,22 +159,21 @@
   margin-top: 4px;
 }
 
-/* === Responsive Grid Breakpoints === */
-/* Tablet (3 columns) */
+
 @media (max-width: 1200px) {
   .product-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* Landscape mobile or small tablets (2 columns) */
+
 @media (max-width: 900px) {
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* Mobile (1 column) */
+
 @media (max-width: 600px) {
   .product-grid {
     grid-template-columns: 1fr;

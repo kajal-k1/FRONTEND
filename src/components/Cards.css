@@ -3,11 +3,11 @@
     justify-content: center;
     padding: 20px;
    
-    gap: 15px; /* space between cards */
+    gap: 15px; 
   }
   
   .image-card {
-    flex: 0 0 calc((100% - 11 * 10px) / 12); /* 12 cards with 11 gaps of 10px */
+    flex: 0 0 calc((100% - 11 * 10px) / 12); 
     aspect-ratio: 6 / 6;
     border-radius: 12px;
     background-color: white;

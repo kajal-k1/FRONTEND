@@ -1,8 +1,4 @@
 
-
-
-
-
  import React from 'react';
  import { Routes, Route } from 'react-router-dom';
  import Header from './components/Header';
@@ -13,9 +9,6 @@ import RegisterPage from './pages/RegisterPage';
 
 import CliqCarePage from './pages/CliqCarePage';
 import CliqCareTopicPage from './pages/CliqCareTopicPage';
-
-
-
  import SecureShopping from './pages/SecureShopping';
 import CartPage from './pages/CartPage';
   import Wishlist from './pages/WishlistPage' 

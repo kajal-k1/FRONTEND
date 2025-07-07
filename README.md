@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # PROJECT
 =======
 # Getting Started with Create React App

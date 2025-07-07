@@ -78,14 +78,14 @@
   background-color: #e6004c;
 }
 
-/* Dropdown item list */
+
 .dropdown-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* Individual item */
+
 .dropdown-item {
   display: flex;
   align-items: center;
@@ -101,14 +101,14 @@
   
 }
 
-/* Icon size */
+
 .dropdown-item .icon {
   font-size: 16px;
   color: #333;
 }
 
 
-/* Mobile responsive */
+
 @media (max-width: 768px) {
   .top-bar {
     flex-direction: column;
@@ -127,7 +127,6 @@
   }
 }
 
-/* Fade-in animation */
 @keyframes fadeIn {
   from {
     opacity: 0;

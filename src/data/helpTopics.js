@@ -1,8 +1,5 @@
 
 
-
-// src/data/helpTopics.js
-
 export const topicList = [
   { icon: "🛍️", title: "Shopping", desc: "Place order, payment types, delivery modes, etc." },
   { icon: "💸", title: "Offers & Promotions", desc: "Deals & offers, redeem offer & coupon, etc." },
@@ -27,7 +24,7 @@ export const helpQuestions = {
       question: "Can I cancel a pre-ordered item?",
       answer: "Yes, you can cancel a pre-ordered item unless it has already been dispatched."
     },
-    // Add more questions...
+   
   ],
 
   "Offers & Promotions": [

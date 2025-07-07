@@ -1,6 +1,4 @@
 
-
-
 import React from "react";
 import "./Footer.css";
 
@@ -112,7 +110,7 @@ const Footer = () => {
 <div className="footer-info-section">
         <h6>Tata CLiQ FASHION: Shop Online with India's most trusted destination</h6>
         <p>
-          Genuine products from all the top brands get delivered right to your doorstep. Our sleek, immersive design allows you to easily navigate between categories and brand stores so that you can find a wide selection of <a href="#">womenswear</a>, <a href="#">menswear</a>, <a href="#">kidswear</a>, <a href="#">footwear</a>, <a href="#">watches</a>, <a href="#">accessories</a>, online.You can also check our great offers and get the best prices on various products across lifestyle,fashion, and more.
+          Genuine products from all the top brands get delivered right to your doorstep. Our sleek, immersive design allows you to easily navigate between categories and brand stores so that you can find a wide selection of <a href="womenswear">womenswear</a>, <a href="menswear">menswear</a>, <a href="kidswear">kidswear</a>, <a href="footwear">footwear</a>, <a href="watches">watches</a>, <a href="Apparel">Apparel</a>, online.You can also check our great offers and get the best prices on various products across lifestyle,fashion, and more.
         </p>
 
         <h6>Online Shopping: Fast & convenient with the click of a button</h6>
@@ -123,12 +121,12 @@ const Footer = () => {
 
         <h6>Tata CLiQ FASHION Shopping App: just a few clicks on Android & iOS</h6>
         <p>
-          Download the Android app from the <a href="#">Play Store</a> or the iOS app from <a href="#">Apple App Store</a> and get set to enjoy a range of benefits.Apart from the best deals,amazing offers and the latest styles online,the app also gives you the flexibility to shop at your convenience.use the easy share options to share your shopping with your friends and family to ensure you're buying something perfect.With constant updates and a host of new features being introduced constantly,enjoy a shopping experience that you'll love
+          Download the Android app from the <a href="playstore">Play Store</a> or the iOS app from <a href="/">Apple App Store</a> and get set to enjoy a range of benefits.Apart from the best deals,amazing offers and the latest styles online,the app also gives you the flexibility to shop at your convenience.use the easy share options to share your shopping with your friends and family to ensure you're buying something perfect.With constant updates and a host of new features being introduced constantly,enjoy a shopping experience that you'll love
         </p>
 
         <h6>Tata CLiQ FASHION: The most genuine place for Fashion and Lifestyle</h6>
         <p>
-          With an exclusive Brand Store for <a href="#">Westside Online</a> we have most of your trendy shopping needs taken care of.Make Tata CliQ FASHION your online shopping destination and get the best deals on your favourite brands 'with 100% genuine products .Be it jewellery or makeup ,you can count on Tata CLiQ FASHION For receiving only the most authentic products.
+          With an exclusive Brand Store for <a href="/">Westside Online</a> we have most of your trendy shopping needs taken care of.Make Tata CliQ FASHION your online shopping destination and get the best deals on your favourite brands 'with 100% genuine products .Be it jewellery or makeup ,you can count on Tata CLiQ FASHION For receiving only the most authentic products.
         </p>
       </div>
       </footer>

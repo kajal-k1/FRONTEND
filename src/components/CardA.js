@@ -93,26 +93,3 @@ export default Carousel;
 
 
 
-
-// {
-//   "id": 101,
-//   "title": "Stylish Cotton Kurta",
-//   "brand": "Varanga",
-//   "category": "Ethnic Wear",
-//   "productType": "Kurta",
-//   "colour": "Blue",
-//   "sizes": ["S", "M", "L"],
-//   "price": 1499,
-//   "originalPrice": 1999,
-//   "discount": 25,
-//   "rating": 4.5,
-//   "reviews": 120,
-//   "images": [
-//     "https://example.com/images/kurta1-main.jpg",
-//     "https://example.com/images/kurta1-side.jpg"
-//   ],
-//   "showPriceDrop": true,
-//   "limitedStock": false
-// }
-
-
