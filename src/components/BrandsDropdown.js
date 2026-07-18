@@ -29,6 +29,7 @@ const brandData = {
   }
 };
 
+console.log(brandData["Women's Fashion"].popular);
 const logoMap = {
   Westside: 'https://assets.tatacliq.com/medias/sys_master/images/46725345673246.jpg',
   Lifestyle: 'https://assets.tatacliq.com/medias/sys_master/images/46725345869854.jpg',
