@@ -60,7 +60,7 @@ const Carousel = () => {
 
   return (
     <>
-    <div className="carousel__heading">CLIQ All Stars</div>
+    <div className="carousel__heading">CLIQ All Stars...</div>
     <div className="carousel">
       <div className="carousel__buttons">
         <button onClick={handlePrev} className="carousel__arrow-btn" aria-label="Previous">
@@ -89,7 +89,6 @@ const Carousel = () => {
 };
 
 export default Carousel;
-
 
 
 
