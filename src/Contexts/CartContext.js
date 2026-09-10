@@ -46,7 +46,7 @@ export const CartProvider = ({ children }) => {
     };
 
     try {
-      const res = await fetch('http://localhost:5000/api/cart', {
+      const res = await fetch('http://100.55.22.162:5000/api/cart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export const CartProvider = ({ children }) => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/cart/${productId}?size=${selectedSize}`,
+        `http://100.55.22.162:5000/api/cart/${productId}?size=${selectedSize}`,
         {
           method: 'DELETE',
           headers: {
@@ -121,7 +121,7 @@ export const CartProvider = ({ children }) => {
         quantity: newQuantity,
       };
 
-      const res = await fetch('http://localhost:5000/api/cart', {
+      const res = await fetch('http://100.55.22.162:5000/api/cart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -142,7 +142,7 @@ export const CartProvider = ({ children }) => {
     if (!token) return;
 
     try {
-      await fetch('http://localhost:5000/api/cart', {
+      await fetch('http://100.55.22.162:5000/api/cart', {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
