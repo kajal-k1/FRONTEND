@@ -31,7 +31,7 @@ const CategoryPage = () => {
   });
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/products')
+    fetch('http://100.55.22.162:5000/api/products')
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error('Error fetching products:', error));

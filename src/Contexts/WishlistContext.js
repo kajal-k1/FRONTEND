@@ -14,7 +14,7 @@ export const WishlistProvider = ({ children }) => {
       if (!token) return;
 
       try {
-        const res = await fetch('http://localhost:5000/api/wishlist', {
+        const res = await fetch('http://100.55.22.162:5000/api/wishlist', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

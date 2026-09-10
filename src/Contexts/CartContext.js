@@ -14,7 +14,7 @@ export const CartProvider = ({ children }) => {
       if (!token) return;
 
       try {
-        const res = await fetch('http://localhost:5000/api/cart', {
+        const res = await fetch('http://100.55.22.162:5000/api/cart', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

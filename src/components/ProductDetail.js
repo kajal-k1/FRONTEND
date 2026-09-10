@@ -23,13 +23,13 @@ const ProductDetailPage = () => {
     const fetchProductData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5000/api/products/${id}`, { signal });
+        const response = await fetch(`http://100.55.22.162:5000/api/products/${id}`, { signal });
         if (!response.ok) throw new Error('Product not found');
         const data = await response.json();
         setProduct(data);
         setSelectedImage(data.images[0]);
 
-        const relatedResponse = await fetch(`http://localhost:5000/api/products/related/${id}`, { signal });
+        const relatedResponse = await fetch(`http://100.55.22.162:5000/api/products/related/${id}`, { signal });
         if (!relatedResponse.ok) throw new Error('Failed to fetch related products');
         const relatedData = await relatedResponse.json();
         setRelatedProducts(relatedData);
