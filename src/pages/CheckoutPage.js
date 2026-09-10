@@ -71,7 +71,7 @@ const CheckoutPage = () => {
     }
 
     try {
-      const orderRes = await fetch('http://localhost:5000/api/payment/create-order', {
+      const orderRes = await fetch('http://100.55.22.162:5000/api/payment/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: totalAmount }),
