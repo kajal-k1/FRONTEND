@@ -32,7 +32,7 @@ function LoginPage() {
 
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const response = await fetch('http://localhost:5000/api/users/login', {
+        const response = await fetch('http://100.55.22.162::5000/api/users/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData),
